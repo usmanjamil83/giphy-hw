@@ -1,5 +1,50 @@
-// creating an array of strings called `topics`. 
-var topics = ["game of thrones","Arrow","The Flash","The Big Bang Theory","The Walking Dead","Westworld","Shameless","American Horror Story","Breaking Bad","House of Cards"];
+// creating an array of strings called `topics`.
+var topics = ["game of thrones","Arrow","The Flash","The Big Bang Theory",
+"The Walking Dead","Westworld","Shameless","American Horror Story",
+"Breaking Bad","House of Cards"];
+
+// creating a function called displayGiply which will carry the URl and
+// the ajax call to get the gaphy from the gaphi api
+function displayGiphy(){
+	var topic = $(this).attr("data-name");
+	var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + topic + 
+	"&api_key=dc6zaTOxFJmzC&limit=10";
+
+	$.ajax({
+		url: queryURL,
+		method: "GET"
+	}).done(function(response) {
+
+	// Storing an array of results in the results variable
+	var results = response.data;
+
+	//Looping over every result item
+	for (var i = 0; i < results.length; i++) {
+
+	// Creating a div with the class "item"
+	var gifDiv = $("<div class='item'>");
+
+	// Storing the result item's rating
+	var rating = results[i].rating;
+
+	// Creating a paragraph tag with the result item's rating
+	var p = $("<p>").text("Rating: " + rating);
+
+	// Creating an image tag
+	var personImage = $("<img>");
+
+	// Giving the image tag an src attribute of a proprty pulled off the result item
+	personImage.attr("src", results[i].images.fixed_height.url);
+
+	// Appending the paragraph and personImage we created to the "gifDiv" div we created
+	gifDiv.append(p);
+	gifDiv.append(personImage);
+
+	// Prepending the gifDiv to the "#gifs-appear-here" div in the HTML
+	$("#images").prepend(gifDiv);
+}
+});
+}
 
 // creating buttons in HTML using jQuery.
 // creating a function to create buttons.
@@ -19,6 +64,7 @@ function creatingButtons(){
 		$("#giphy-view").append(button);
 	}
 }
+
 // creating on click event for the button to populate the array of topics
 $("#add-giphy").on("click", function(event) {
 	event.preventDefault();
@@ -29,39 +75,8 @@ $("#add-giphy").on("click", function(event) {
 	// calling the function creatingButtons
 	creatingButtons();
 });
-// calling the function creatingButtons
+// Adding a click event listener to all elements with a class of "topic
+$(document).on("click", ".topic", displayGiphy);
+
+// Calling the creatingButtons function
 creatingButtons();
-
-
-
-
-// 3. When the user clicks on a button, the page should grab 10 static, non-animated gif images from the GIPHY API and place them on the page. 
-
-// 4. When the user clicks one of the still GIPHY images, the gif should animate. If the user clicks the gif again, it should stop playing.
-
-// 5. Under every gif, display its rating (PG, G, so on). 
-
-//    * This data is provided by the GIPHY API.
-//    * Only once you get images displaying with button presses should you move on to the next step.
-
-// 6. Add a form to your page takes the value from a user input box and adds it into your `topics` array. Then make a function call that takes each topic in the array remakes the buttons on the page.
-
-// 7. **Rejoice**! You just made something really cool.
-
-// - - -
-
-function displayGiphy(){
-	var topic = $(this).attr("data-name");
-	var queryURL = "http://api.giphy.com/v1/gifs/search?q=" +
-	topic + "&api_key=dc6zaTOxFJmzC&limit=10";
-
-	$.ajax({
-		url: queryURL,
-		method: "GET"
-	}).done(function(response){
-		console.log(response);
-	});
-}
-displayGiphy();
-
-// still have to create an on click functionto make it work
