@@ -73,7 +73,7 @@ function displayGiphy(){
 	// Giving the image tag an src attribute of a proprty pulled off the result item
 	giphyImage.attr({"src": results[i].images.fixed_height_still.url,
 		"data-still": results[i].images.fixed_height_still.url,
-		"data-animate":results[i].images.fixed_height.url,
+		"data-animate": results[i].images.fixed_height.url,
 		"data-state": "still"});
 
 	// Appending the paragraph and personImage we created to the "gifDiv" div we created
@@ -85,16 +85,18 @@ function displayGiphy(){
 });
 }
 
-$("#images").on("click", function(){
+$("#images").on("click", "img", function(){
 	var state = $(this).attr("data-state");
 // If the clicked image's state is still, update its src attribute to what its data-animate value is.
 // Then, set the image's data-state to animate
 // Else set src to the data-still value
 if (state === "still") {
-	$(this).attr("src", $(this).attr("data-animate"));
+	var farhan = $(this).attr("data-animate");
+	$(this).attr("src", farhan);
 	$(this).attr("data-state", "animate");
 } else {
-	$(this).attr("src", $(this).attr("data-still"));
+	var usman =  $(this).attr("data-still");
+	$(this).attr("src", usman);
 	$(this).attr("data-state", "still");
 }
 });
