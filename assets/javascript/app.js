@@ -51,6 +51,7 @@ function displayGiphy(){
 		"&api_key=dc6zaTOxFJmzC",
 		method: "GET"
 	}).done(function(response) {
+		console.log(response);
 
 	// Storing an array of results in the results variable
 	var results = response.data;
